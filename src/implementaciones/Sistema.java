@@ -48,6 +48,59 @@ public class Sistema {
                     System.out.println("Ingrese el precio de venta: ");
                     producto.setPrecioVenta(lector.nextDouble());
                     lector.nextLine();
+                    productos.add(producto);
+                    break;
+                case 3:
+                    Venta venta=new Venta();
+                    int codigo;
+                    boolean swCliente=false;
+                    Cliente clienteVenta=new Cliente();
+                    boolean swProducto=false;
+                    Producto productoVenta=new Producto();
+                    List<Producto> detalles=new ArrayList();
+                    System.out.println("Ingrese el código de la venta: ");
+                    venta.setId(lector.nextInt());
+                    lector.nextLine();
+                    System.out.println("Ingrese el número de la venta: ");
+                    venta.setNumero(lector.nextLine());
+                    System.out.println("Seleccione el Cliente: ");
+                    System.out.println("Ingrese su código: ");
+                    codigo=lector.nextInt();
+                    for (Cliente cli: clientes) {
+                        if(codigo==cli.getId()){
+                            swCliente=true;
+                            clienteVenta=cli;
+                        }
+                    }
+                    if(swCliente==false){
+                        System.out.println("El cliente no existe.");
+                        break;
+                    }
+                    venta.setCliente(clienteVenta);
+                    int opcionDetalle;
+                    do{
+                        System.out.println("Ingrese opción \n 0: no agregar más");
+                        opcionDetalle=lector.nextInt();
+                        System.out.println("Seleccione el Producto: ");
+                        System.out.println("Ingrese su código: ");
+                        codigo=lector.nextInt();
+                        for (Producto prod: productos) {
+                            if(codigo==prod.getId()){
+                                swProducto=true;
+                                productoVenta=prod;
+                            }
+                        }
+                        if(swProducto==false){
+                            System.out.println("El producto no existe.");
+                            break;
+                        }
+                        detalles.add(productoVenta);
+                    }while(opcionDetalle!=0);
+
+                    venta.setDetalles(detalles);
+                    venta.imprimir();
+                    ventas.add(venta);
+                    System.out.println("########################################################");
                     break;
                 case 4:
                     for (Cliente cli: clientes) {
@@ -62,6 +115,12 @@ public class Sistema {
                         System.out.println("----------------------------------------------------");
                     }
                     System.out.println("###################################################");
+                    break;
+                case 6:
+                    for (Venta ven: ventas) {
+                        ven.imprimir();
+                        System.out.println("-------------------------------------------------------");
+                    }
                     break;
             }
 
